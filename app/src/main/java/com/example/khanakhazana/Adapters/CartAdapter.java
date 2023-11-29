@@ -1,7 +1,9 @@
 package com.example.khanakhazana.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,18 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.khanakhazana.Model.FoodModel;
 import com.example.khanakhazana.databinding.CartItemBinding;
-import com.example.khanakhazana.databinding.PopularItemBinding;
 
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
     ArrayList<FoodModel> list;
     Context context;
+    private final int[] itemQuantities;
+
 
     public CartAdapter(ArrayList<FoodModel> list, Context context) {
-        this.list = list;
+        this.list = list != null ? list : new ArrayList<>(); // Check for null and provide an empty list if needed
         this.context = context;
+        this.itemQuantities = new int[this.list.size()]; // Initialize itemQuantities based on the size of the list
+
     }
+
 
     @NonNull
     @Override
@@ -30,6 +36,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
         return new viewHolder(binding);
     }
 
+
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.viewHolder holder, int position) {
         FoodModel foodModel = list.get(position);
@@ -38,7 +46,41 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
         holder.binding.cartFoodName.setText(foodModel.getFoodName());
         holder.binding.cartFoodPrice.setText(foodModel.getFoodPrice());
 
+        holder.binding.minusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (itemQuantities[position] > 1) {
+                    itemQuantities[position]--;
+                    holder.binding.itemQuantity.setText(String.valueOf(itemQuantities[position]));
+                }
+            }
+        });
+
+        holder.binding.plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemQuantities[position]++;
+                holder.binding.itemQuantity.setText(String.valueOf(itemQuantities[position]));
+            }
+        });
+
+        holder.binding.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Remove the item from the list
+                list.remove(position);
+
+                // Notify the adapter that an item has been removed
+                notifyItemRemoved(position);
+
+                // Optionally, you may want to update other items' positions if needed
+                notifyItemRangeChanged(position, getItemCount());
+            }
+        });
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -46,7 +88,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
     }
 
     public class viewHolder extends RecyclerView.ViewHolder {
-        private  CartItemBinding binding;
+        private CartItemBinding binding;
 
         public viewHolder(@NonNull CartItemBinding binding) {
             super(binding.getRoot());

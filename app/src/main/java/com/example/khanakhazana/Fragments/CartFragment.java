@@ -43,13 +43,22 @@ public class CartFragment extends Fragment {
         // Sample data for the RecyclerView
         CartAdapter cartAdapter = new CartAdapter(list, getContext());
         fragmentCartBinding.rvCart.setAdapter(cartAdapter);
+
+
     }
+
 
     private ArrayList<FoodModel> generatePopularItem() {
         ArrayList<FoodModel> popularModels = new ArrayList<>();
         popularModels.add(new FoodModel(R.drawable.menu1, "Herbal Pancake", "₹ 99"));
         popularModels.add(new FoodModel(R.drawable.menu2, "Fruit Salad", "₹ 129"));
         popularModels.add(new FoodModel(R.drawable.menu3, "Ice Cream", "₹ 149"));
+        popularModels.add(new FoodModel(R.drawable.menu5, "Herbal Pancake", "₹ 99"));
+        popularModels.add(new FoodModel(R.drawable.menu6, "Fruit Salad", "₹ 129"));
+        popularModels.add(new FoodModel(R.drawable.menu7, "Ice Cream", "₹ 149"));
+        popularModels.add(new FoodModel(R.drawable.menu2, "Fruit Salad", "₹ 129"));
+        popularModels.add(new FoodModel(R.drawable.menu3, "Ice Cream", "₹ 149"));
+
         return popularModels;
     }
 }
