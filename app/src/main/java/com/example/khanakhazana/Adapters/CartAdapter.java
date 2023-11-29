@@ -3,7 +3,6 @@ package com.example.khanakhazana.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -46,37 +45,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
         holder.binding.cartFoodName.setText(foodModel.getFoodName());
         holder.binding.cartFoodPrice.setText(foodModel.getFoodPrice());
 
-        holder.binding.minusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.binding.minusBtn.setOnClickListener(v -> {
 
-                if (itemQuantities[position] > 1) {
-                    itemQuantities[position]--;
-                    holder.binding.itemQuantity.setText(String.valueOf(itemQuantities[position]));
-                }
-            }
-        });
-
-        holder.binding.plusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemQuantities[position]++;
+            if (itemQuantities[position] > 1) {
+                itemQuantities[position]--;
                 holder.binding.itemQuantity.setText(String.valueOf(itemQuantities[position]));
             }
         });
 
-        holder.binding.deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Remove the item from the list
-                list.remove(position);
+        holder.binding.plusBtn.setOnClickListener(v -> {
+            itemQuantities[position]++;
+            holder.binding.itemQuantity.setText(String.valueOf(itemQuantities[position]));
+        });
 
-                // Notify the adapter that an item has been removed
-                notifyItemRemoved(position);
+        holder.binding.deleteBtn.setOnClickListener(v -> {
+            // Remove the item from the list
+            list.remove(position);
 
-                // Optionally, you may want to update other items' positions if needed
-                notifyItemRangeChanged(position, getItemCount());
-            }
+            // Notify the adapter that an item has been removed
+            notifyItemRemoved(position);
+
+            // Optionally, you may want to update other items' positions if needed
+            notifyItemRangeChanged(position, getItemCount());
         });
 
     }
@@ -87,8 +77,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
         return list.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder {
-        private CartItemBinding binding;
+    public static class viewHolder extends RecyclerView.ViewHolder {
+        private final CartItemBinding binding;
 
         public viewHolder(@NonNull CartItemBinding binding) {
             super(binding.getRoot());
