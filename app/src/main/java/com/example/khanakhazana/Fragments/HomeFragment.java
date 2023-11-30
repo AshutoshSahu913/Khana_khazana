@@ -22,7 +22,9 @@ import com.example.khanakhazana.Model.FoodModel;
 import com.example.khanakhazana.R;
 import com.example.khanakhazana.databinding.FragmentHomeBinding;
 
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -34,10 +36,10 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        fragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        fragmentHomeBinding = DataBindingUtil.inflate(Objects.requireNonNull(inflater), R.layout.fragment_home, container, false);
         View root = fragmentHomeBinding.getRoot();
         setPopularRecyclerView();
         return root;
@@ -47,7 +49,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         /*Add slider image into arraylist*/
-        ArrayList<SlideModel> arrayList = new ArrayList<SlideModel>();
+        ArrayList<SlideModel> arrayList = new ArrayList<>();
         arrayList.add(new SlideModel(R.drawable.banner1, ScaleTypes.FIT));
         arrayList.add(new SlideModel(R.drawable.banner2, ScaleTypes.FIT));
         arrayList.add(new SlideModel(R.drawable.banner3, ScaleTypes.FIT));
@@ -70,7 +72,11 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), itemMessage, Toast.LENGTH_SHORT).show();
             }
         });
-
+        //for AllViewItems
+        fragmentHomeBinding.viewAllMenuTxt.setOnClickListener(v->{
+            MenuBottomSheetFragment bottomSheetFragment = new MenuBottomSheetFragment();
+            bottomSheetFragment.show(getParentFragmentManager(), bottomSheetFragment.getTag());
+        });
     }
 
     public void setPopularRecyclerView() {
@@ -81,6 +87,7 @@ public class HomeFragment extends Fragment {
         // Sample data for the RecyclerView
         PopularAdapter popularAdapter = new PopularAdapter(list, getContext());
         fragmentHomeBinding.rvPopularItem.setAdapter(popularAdapter);
+
     }
 
     private ArrayList<FoodModel> generatePopularItem() {

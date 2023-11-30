@@ -46,7 +46,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
         holder.binding.cartFoodPrice.setText(foodModel.getFoodPrice());
 
         holder.binding.minusBtn.setOnClickListener(v -> {
-
             if (itemQuantities[position] > 1) {
                 itemQuantities[position]--;
                 holder.binding.itemQuantity.setText(String.valueOf(itemQuantities[position]));

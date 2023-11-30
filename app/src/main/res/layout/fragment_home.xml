@@ -61,14 +61,14 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/viewMenuTxt"
+                android:id="@+id/viewAllMenuTxt"
                 android:layout_width="80dp"
                 android:layout_height="25dp"
                 android:background="@drawable/textviewshape"
                 android:fontFamily="@font/yeonsung_regular"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="View Menu"
+                android:text="View All Menu"
                 android:textColor="@color/appColor"
                 android:textSize="12sp" />
         </LinearLayout>
